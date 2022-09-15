@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    >
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:padding="12dp"
+        android:id="@+id/titlebar_imgl"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/titlebar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:maxWidth="260dp"
+        android:text="@string/app_name"
+        android:textSize="16sp"
+        />
+
+
+    <ImageView
+        android:id="@+id/titlebar_imgr"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:onClick="selectMore"
+        android:padding="12dp"
+        android:src="@drawable/add_selector" />
+
+
+
+
+    <TextView
+        android:id="@+id/remark_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/titlebar_title"
+        android:textSize="10sp"
+        android:layout_toRightOf="@+id/titlebar_title" />
+
+
+</RelativeLayout>
