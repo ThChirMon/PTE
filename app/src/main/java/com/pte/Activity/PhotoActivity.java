@@ -1,17 +1,14 @@
 package com.pte.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -20,10 +17,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.pte.R;
+
 import java.io.File;
 import java.io.IOException;
-import com.pte.R;
-import com.pte.Util.UploadUtils;
 
 public class PhotoActivity extends BaseActivity {
     private static final String TAG = "PhotoActivity";
@@ -59,6 +58,7 @@ public class PhotoActivity extends BaseActivity {
     protected void initData() {
         checkPermissions();
     }
+
     private class Btnlistener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
@@ -79,6 +79,7 @@ public class PhotoActivity extends BaseActivity {
 
                     break;
             }
+
         }
     }
 
@@ -116,14 +117,14 @@ public class PhotoActivity extends BaseActivity {
     }
 
     private void takePhone() throws IOException {
-        Intent intent = new Intent();
-        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
         // 要保存的图片文件
         // 获取文件
         file = createFileIfNeed("flower.png");
         // 将file转换成uri
         // 注意7.0及以上与之前获取的uri不一样了，返回的是provider路径
         imgUri = getUriForFile(this, file);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
         startActivityForResult(intent, REQUEST_TAKE_PHOTO);
     }
@@ -143,15 +144,20 @@ public class PhotoActivity extends BaseActivity {
     // 从file中获取uri
     // 7.0及以上使用的uri是contentProvider content://com.rain.takephotodemo.FileProvider/images/photo_20180824173621.jpg
     // 6.0使用的uri为file:///storage/emulated/0/take_photo/photo_20180824171132.jpg
-    private static Uri getUriForFile(Context context, File file) {
+    private Uri getUriForFile(Context context, File file) {
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
         if (context == null || file == null) {
             throw new NullPointerException();
         }
         Uri uri;
-        if (Build.VERSION.SDK_INT >= 24) {
-            uri = FileProvider.getUriForFile(context.getApplicationContext(), "com.rain.takephotodemo.FileProvider", file);
-        } else {
+        if (currentapiVersion < 24) {
+            // 从文件中创建uri
             uri = Uri.fromFile(file);
+        } else {
+            //兼容android7.0 使用共享文件的形式
+            ContentValues contentValues = new ContentValues(1);
+            contentValues.put(MediaStore.Images.Media.DATA, file.getAbsolutePath());
+            uri = getApplication().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
         }
         return uri;
     }
@@ -160,10 +166,10 @@ public class PhotoActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            System.out.println(requestCode);
             switch (requestCode) {
                 // 拍照并进行裁剪
                 case REQUEST_TAKE_PHOTO:
+                    System.out.println("成功");
                     Log.e(TAG, "onActivityResult: imgUri:REQUEST_TAKE_PHOTO:" + imgUri.toString());
                     try {
                         cropPhoto(imgUri, true);
@@ -199,6 +205,7 @@ public class PhotoActivity extends BaseActivity {
         }
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("scale", true);
+        intent.putExtra("crop", true);
 
         // 设置裁剪区域的宽高比例
         intent.putExtra("aspectX", 1);
@@ -225,7 +232,7 @@ public class PhotoActivity extends BaseActivity {
             mCutUri = Uri.fromFile(mCutFile);
         }
         filepath = mCutUri.getPath();
-        // UploadUtils.uploadFile(filepath);
+        //UploadUtils.uploadFile(filepath);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, mCutUri);
         Toast.makeText(this, "剪裁图片", Toast.LENGTH_SHORT).show();
         // 以广播方式刷新系统相册，以便能够在相册中找到刚刚所拍摄和裁剪的照片
