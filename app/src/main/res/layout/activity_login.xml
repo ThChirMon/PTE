@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     tools:context=".Activity.LoginActivity">
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="329dp"
-        android:src="@mipmap/login"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        android:src="@mipmap/login" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

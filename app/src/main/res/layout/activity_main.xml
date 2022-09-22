@@ -21,20 +21,20 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
+            android:background="@drawable/shape_login_btn"
             android:text="@string/login"
             android:textColor="#ffffff"
-            android:textSize="20sp"
-            android:background="@drawable/shape_login_btn"/>
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btn_register"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
+            android:background="@drawable/shape_register_btn"
             android:text="@string/register"
             android:textColor="#ffffff"
-            android:textSize="20sp"
-            android:background="@drawable/shape_register_btn"/>
+            android:textSize="20sp" />
     </RelativeLayout>
 
 </RelativeLayout>
