@@ -13,4 +13,6 @@
     <color name="divider">#e8e7e7</color>
     <color name="skin_text_white">#ffffff</color>
     <color name="skin_topbar_bg_color">#344261</color>
+    <color name="bk_photo">#cde6c7</color>
+    <color name="bk_photo_btn">#65c294</color>
 </resources>

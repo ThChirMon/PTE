@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/bk_photo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.PhotoActivity">
@@ -9,36 +10,28 @@
     <include
         layout="@layout/activity_tabbar"
         android:id="@+id/include_web" />
+
     <ImageView
         android:id="@+id/vw_img"
-        android:layout_width="181dp"
-        android:layout_height="178dp"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
         android:background="#CCFFFFFF"
+        android:scaleType="fitXY"
+        android:src="@mipmap/insect"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.224" />
+        app:layout_constraintVertical_bias="0.09" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
+        android:background="@color/bk_photo_btn"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="立即拍照"
         app:layout_constraintTop_toBottomOf="@+id/vw_img"
         tools:layout_editor_absoluteX="16dp" />
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
