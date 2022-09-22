@@ -2,6 +2,7 @@ package com.pte.Activity;
 
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -12,9 +13,13 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,6 +41,9 @@ public class PhotoActivity extends BaseActivity {
     private File file;// 拍照保存的图片文件
     private String filepath; // 上传文件地址
     private boolean hasPermission = false;
+    private Dialog mShareDialog;
+    private Button button;
+    private TextView txt_take_photo,txt_gallery;
 
 
     private Button photo,gallery;
@@ -47,11 +55,12 @@ public class PhotoActivity extends BaseActivity {
     @Override
     protected void initView() {
         img = findViewById(R.id.vw_img);
-        photo = findViewById(R.id.btn_photo);
-        gallery = findViewById(R.id.btn_gallery);
+
+        button = findViewById(R.id.button);
+        txt_take_photo = findViewById(R.id.txt_take_photo);
+        txt_gallery = findViewById(R.id.txt_gallery);
         Btnlistener btnlistener = new Btnlistener();
-        photo.setOnClickListener(btnlistener);
-        gallery.setOnClickListener(btnlistener);
+        button.setOnClickListener(btnlistener);
     }
 
     @Override
@@ -63,21 +72,8 @@ public class PhotoActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
-                case R.id.btn_photo:
-                    if (hasPermission) {
-                        try {
-                            takePhone();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    break;
-                case R.id.btn_gallery:
-                    if (hasPermission) {
-                        openGallery();
-                    }
-
-                    break;
+                case R.id.button:
+                    showDialog();
             }
 
         }
@@ -242,4 +238,63 @@ public class PhotoActivity extends BaseActivity {
         startActivityForResult(intent, REQUEST_CROP); //设置裁剪参数显示图片至ImageVie
     }
 
+    //按钮 单击事件
+    public void btnShowDialog(View view) {
+        showDialog();// 单击按钮后 调用显示视图的 showDialog 方法，
+    }
+
+    /**
+     * 显示弹出框
+     */
+    private void showDialog() {
+        if (mShareDialog == null) {
+            initShareDialog();
+        }
+        mShareDialog.show();
+    }
+    /**
+     * 初始化分享弹出框
+     */
+    private void initShareDialog() {
+        mShareDialog = new Dialog(this, R.style.dialog_bottom_full);
+        mShareDialog.setCanceledOnTouchOutside(true); //手指触碰到外界取消
+        mShareDialog.setCancelable(true);             //可取消 为true
+        Window window = mShareDialog.getWindow();      // 得到dialog的窗体
+        window.setGravity(Gravity.BOTTOM);
+        window.setWindowAnimations(R.style.share_animation);
+
+        View view = View.inflate(this, R.layout.lay_share, null); //获取布局视图
+        view.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mShareDialog != null && mShareDialog.isShowing()) {
+                    mShareDialog.dismiss();
+                }
+
+            }
+        });
+        view.findViewById(R.id.txt_take_photo).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                if (hasPermission) {
+                    try {
+                        takePhone();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        view.findViewById(R.id.txt_gallery).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                if (hasPermission) {
+                    openGallery();
+                }
+
+            }
+        });
+        window.setContentView(view);
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);//设置横向全屏
+    }
 }

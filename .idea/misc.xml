@@ -13,10 +13,11 @@
         <entry key="..\:/PTE/app/src/main/res/drawable/shape_register_btn.xml" value="0.217" />
         <entry key="..\:/PTE/app/src/main/res/layout/activity_login.xml" value="0.24547101449275363" />
         <entry key="..\:/PTE/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/PTE/app/src/main/res/layout/activity_photo.xml" value="0.1125" />
+        <entry key="..\:/PTE/app/src/main/res/layout/activity_photo.xml" value="0.264" />
         <entry key="..\:/PTE/app/src/main/res/layout/activity_photo_activiy.xml" value="0.24547101449275363" />
         <entry key="..\:/PTE/app/src/main/res/layout/activity_register.xml" value="0.24547101449275363" />
         <entry key="..\:/PTE/app/src/main/res/layout/activity_tabbar.xml" value="0.11197916666666667" />
+        <entry key="..\:/PTE/app/src/main/res/layout/lay_share.xml" value="0.24547101449275363" />
       </map>
     </option>
   </component>
