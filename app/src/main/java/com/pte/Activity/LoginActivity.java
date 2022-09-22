@@ -1,6 +1,9 @@
 package com.pte.Activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +15,10 @@ public class LoginActivity extends BaseActivity{
     private EditText etAccount,etPwd;
     private Button btnLogin;
     private String re_account,re_pwd;
+    SharedPreferences sprfMain;
+
+    SharedPreferences.Editor editorMain;
+
 
     @Override
     protected int initLayout() {
@@ -20,6 +27,22 @@ public class LoginActivity extends BaseActivity{
 
     @Override
     protected void initView() {
+        sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
+        editorMain=sprfMain.edit();
+        if(sprfMain.getBoolean("main",false)){
+
+            Intent intent=new Intent(LoginActivity.this,PhotoActivity.class);
+
+            startActivity(intent);
+
+            LoginActivity.this.finish();
+
+        }
+
+        setContentView(R.layout.activity_login);
+
+
+
         etAccount = findViewById(R.id.et_account);
         etPwd = findViewById(R.id.et_pwd);
         btnLogin = findViewById(R.id.btn_login);
@@ -48,6 +71,12 @@ public class LoginActivity extends BaseActivity{
                     String account = etAccount.getText().toString().trim();
                     String pwd = etPwd.getText().toString().trim();
                     login(account, pwd);
+
+                    Intent intent=new Intent(LoginActivity.this,PhotoActivity.class);
+                    editorMain.putBoolean("main",true);
+                    editorMain.commit();
+                    startActivity(intent);
+                    LoginActivity.this.finish();
             }
         }
     }

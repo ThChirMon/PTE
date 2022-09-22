@@ -29,7 +29,6 @@ public class RegisterActivity extends BaseActivity{
 
     @Override
     protected void initView() {
-        register = findViewById(R.id.btn_register);
         etAccount = findViewById(R.id.et_account);
         etPwd = findViewById(R.id.et_pwd);
     }
@@ -43,10 +42,13 @@ public class RegisterActivity extends BaseActivity{
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
+                /*
                 case R.id.btn_register:
                     String account = etAccount.getText().toString().trim();
                     String pwd = etPwd.getText().toString().trim();
                     register(account, pwd);
+
+                 */
             }
         }
     }

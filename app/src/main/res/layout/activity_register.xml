@@ -114,17 +114,17 @@
                     android:textSize="18sp" />
             </LinearLayout>
 
-            <Button
-                android:id="@id/btn_register"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="67dp"
-                android:layout_marginRight="18dp"
-                android:background="@drawable/shape_big_register_btn"
-                android:text="@string/register"
-                android:textColor="@color/white"
-                android:textSize="24sp" />
+<!--            <Button-->
+<!--                android:id="@id/btn_register"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="55dp"-->
+<!--                android:layout_marginLeft="18dp"-->
+<!--                android:layout_marginTop="67dp"-->
+<!--                android:layout_marginRight="18dp"-->
+<!--                android:background="@drawable/shape_big_register_btn"-->
+<!--                android:text="@string/register"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="24sp" />-->
 
         </LinearLayout>
 

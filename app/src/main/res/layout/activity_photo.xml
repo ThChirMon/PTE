@@ -8,8 +8,10 @@
     tools:context=".Activity.PhotoActivity">
 
     <include
+        android:id="@+id/include_web"
         layout="@layout/activity_tabbar"
-        android:id="@+id/include_web" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="469dp" />
 
     <ImageView
         android:id="@+id/vw_img"
@@ -33,5 +35,21 @@
         app:layout_constraintTop_toBottomOf="@+id/vw_img"
         tools:layout_editor_absoluteX="16dp" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:textColor="@color/black"
+        android:text="使用说明：\n    用户点击立即拍照，可以选择使用手机自带相机
+或者从相册中选择图片进行传输操作，本软件只需登录一次不需重复登入，如果想更改账号请点击右上角退出注销账户。"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <TextView
+        android:id="@+id/txt_location"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        tools:layout_editor_absoluteX="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

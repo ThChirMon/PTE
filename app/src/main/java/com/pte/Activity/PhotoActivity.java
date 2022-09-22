@@ -6,11 +6,13 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,6 +27,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.pte.R;
+import com.pte.Util.LocationUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,7 +46,8 @@ public class PhotoActivity extends BaseActivity {
     private boolean hasPermission = false;
     private Dialog mShareDialog;
     private Button button;
-    private TextView txt_take_photo,txt_gallery;
+    private TextView txt_take_photo,txt_gallery,txt_exit;
+
 
 
     private Button photo,gallery;
@@ -55,12 +59,14 @@ public class PhotoActivity extends BaseActivity {
     @Override
     protected void initView() {
         img = findViewById(R.id.vw_img);
-
         button = findViewById(R.id.button);
         txt_take_photo = findViewById(R.id.txt_take_photo);
         txt_gallery = findViewById(R.id.txt_gallery);
+        txt_exit = findViewById(R.id.txt_exit);
         Btnlistener btnlistener = new Btnlistener();
         button.setOnClickListener(btnlistener);
+        txt_exit.setOnClickListener(btnlistener);
+
     }
 
     @Override
@@ -73,10 +79,37 @@ public class PhotoActivity extends BaseActivity {
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.button:
-                    showDialog();
+                    TextView txt_location = findViewById(R.id.txt_location);
+
+
+                    System.out.println(LocationUtils.getInstance().getLocations(mContext));
+                    //showDialog();
+                    break;
+                case R.id.txt_exit:
+                    //点击注销按键后调用LoginActivity提供的resetSprfMain()方法执行editorMain.putBoolean("main",false);，即将"main"对应的值修改为false
+
+                    resetSprfMain();
+
+                    Intent intent=new Intent(PhotoActivity.this,LoginActivity.class);
+
+                    startActivity(intent);
+
+                    PhotoActivity.this.finish();
+
             }
 
         }
+    }
+    public void resetSprfMain(){
+
+        SharedPreferences sprfMain = PreferenceManager.getDefaultSharedPreferences(this);
+
+        SharedPreferences.Editor editorMain = sprfMain.edit();
+
+        editorMain.putBoolean("main",false);
+
+        editorMain.commit();
+
     }
 
     private void openGallery() {
@@ -91,10 +124,13 @@ public class PhotoActivity extends BaseActivity {
             // 检查是否有存储和拍照权限
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                     && checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+                    && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                    && checkSelfPermission(Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS) == PackageManager.PERMISSION_GRANTED
+                    && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
             ) {
                 hasPermission = true;
             } else {
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_PERMISSION);
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA,Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS}, REQUEST_PERMISSION);
             }
         }
     }
@@ -291,10 +327,10 @@ public class PhotoActivity extends BaseActivity {
                 if (hasPermission) {
                     openGallery();
                 }
-
             }
         });
         window.setContentView(view);
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);//设置横向全屏
     }
+
 }

@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/PTE/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/PTE/app/src/main/res/drawable/shape_big_login_btn.xml" value="0.1235" />
+        <entry key="..\:/PTE/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/PTE/app/src/main/res/layout/activity_photo.xml" value="0.2" />
+        <entry key="..\:/PTE/app/src/main/res/layout/activity_register.xml" value="0.264" />
+        <entry key="..\:/PTE/app/src/main/res/layout/activity_tabbar.xml" value="0.536" />
         <entry key="..\:/try/PTE/app/src/main/res/drawable/shape_big_login_btn.xml" value="0.2265" />
         <entry key="..\:/try/PTE/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/try/PTE/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
