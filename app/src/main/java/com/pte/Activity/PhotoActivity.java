@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.pte.R;
+import com.pte.Util.DeleteCharString;
 import com.pte.Util.LocationUtils;
 
 import java.io.File;
@@ -47,7 +49,8 @@ public class PhotoActivity extends BaseActivity {
     private Dialog mShareDialog;
     private Button button;
     private TextView txt_take_photo,txt_gallery,txt_exit;
-
+    private String location;
+    private TextView txt_location;
 
 
     private Button photo,gallery;
@@ -61,12 +64,24 @@ public class PhotoActivity extends BaseActivity {
         img = findViewById(R.id.vw_img);
         button = findViewById(R.id.button);
         txt_take_photo = findViewById(R.id.txt_take_photo);
+        txt_location = findViewById(R.id.txt_location);
         txt_gallery = findViewById(R.id.txt_gallery);
         txt_exit = findViewById(R.id.txt_exit);
         Btnlistener btnlistener = new Btnlistener();
         button.setOnClickListener(btnlistener);
         txt_exit.setOnClickListener(btnlistener);
-
+        new Handler(mContext.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                DeleteCharString delete = new DeleteCharString();
+                location = delete.deleteCharString(LocationUtils.getInstance().getLocations(mContext).toString(),'[');
+                location = delete.deleteCharString(location,']');
+                location = delete.deleteCharString(location,',');
+                location = delete.deleteCharString(location,' ');
+                txt_location.setText(location);
+                // 1s后会执行的操作
+            }
+        });
     }
 
     @Override
@@ -79,27 +94,24 @@ public class PhotoActivity extends BaseActivity {
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.button:
-                    TextView txt_location = findViewById(R.id.txt_location);
-
-
-                    System.out.println(LocationUtils.getInstance().getLocations(mContext));
-                    //showDialog();
+                    DeleteCharString delete = new DeleteCharString();
+                    location = delete.deleteCharString(LocationUtils.getInstance().getLocations(mContext).toString(),'[');
+                    location = delete.deleteCharString(location,']');
+                    location = delete.deleteCharString(location,',');
+                    location = delete.deleteCharString(location,' ');
+                    txt_location.setText(location);
+                    showDialog();
                     break;
                 case R.id.txt_exit:
                     //点击注销按键后调用LoginActivity提供的resetSprfMain()方法执行editorMain.putBoolean("main",false);，即将"main"对应的值修改为false
-
                     resetSprfMain();
-
                     Intent intent=new Intent(PhotoActivity.this,LoginActivity.class);
-
                     startActivity(intent);
-
                     PhotoActivity.this.finish();
-
             }
-
         }
     }
+
     public void resetSprfMain(){
 
         SharedPreferences sprfMain = PreferenceManager.getDefaultSharedPreferences(this);
@@ -117,7 +129,6 @@ public class PhotoActivity extends BaseActivity {
         intent.setType("image/*");
         startActivityForResult(intent, SCAN_OPEN_PHONE);
     }
-
 
     private void checkPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -278,7 +289,6 @@ public class PhotoActivity extends BaseActivity {
     public void btnShowDialog(View view) {
         showDialog();// 单击按钮后 调用显示视图的 showDialog 方法，
     }
-
     /**
      * 显示弹出框
      */

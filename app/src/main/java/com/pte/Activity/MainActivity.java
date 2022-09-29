@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Intent in = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(in);
-                // 3s后会执行的操作
+                // 1s后会执行的操作
             }
         }.start();
 

@@ -5,6 +5,7 @@
     android:layout_height="50dp"
     android:background="@color/white"
     android:orientation="horizontal"
+    android:backgroundTint="@color/bk_photo"
     >
 
     <ImageView

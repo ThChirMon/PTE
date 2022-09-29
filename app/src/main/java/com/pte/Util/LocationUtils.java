@@ -10,7 +10,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.util.Log;
 import android.widget.Toast;
-
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -78,8 +77,8 @@ public class LocationUtils {
                     strLocation += "" + convertAddress(context, location.getLatitude(), location.getLongitude());
                 }
             }
-            strings.add(strLocation);
-            strings.add(location.getLatitude()+"/"+location.getLongitude());
+            strings.add("拍摄地点：" + strLocation + "\n");
+            strings.add("纬度位置：" + location.getLatitude() + "\n经度位置："+location.getLongitude());
 
         } catch (SecurityException e) {
             e.printStackTrace();

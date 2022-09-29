@@ -36,21 +36,44 @@
         tools:layout_editor_absoluteX="16dp" />
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="252dp"
         android:text="使用说明：\n    用户点击立即拍照，可以选择使用手机自带相机
 或者从相册中选择图片进行传输操作，本软件只需登录一次不需重复登入，如果想更改账号请点击右上角退出注销账户。"
         android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/txt_location"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="188dp"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        tools:layout_editor_absoluteX="0dp" />
+        android:layout_height="62dp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="272dp"
+        android:layout_height="193dp"
+        android:text="  草地贪夜蛾又称秋黏虫，是一种起源于美洲的农业重大害虫，破坏性极强。成虫在夜间活动，幼虫以新叶为食，其发育的速度会随着气温的提升而变快，一年可繁衍数代，一只雌蛾即可产下超过1000颗卵。该物种原产于美洲热带地区，具有很强的迁徙能力，虽不能在零度以下的环境越冬，但仍可于每年气温转暖时迁徙至美国东部与加拿大南部各地，美国历史上即发生过数起草地贪夜蛾的虫灾。"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_location"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="133dp"
+        android:layout_height="191dp"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/txt_location"
+        android:src="@mipmap/cdtye"
+        android:scaleType="fitXY"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
